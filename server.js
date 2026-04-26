@@ -41,17 +41,26 @@ app.get('/api/curriculum', async (req, res) => {
 // Use upload.single('syllabusFile') to catch the file from your admin.js
 app.post('/api/curriculum', upload.single('syllabusFile'), async (req, res) => {
     try {
+        console.log("File received:", req.file); // Check Render logs for this!
+        
         const entry = new Curriculum({
             branch: req.body.branch,
             code: req.body.code,
             revision: req.body.revision,
             status: req.body.status,
+            // Use path.join to avoid 'relative path' bugs on Linux servers
             filePath: req.file ? `/uploads/${req.file.filename}` : '#' 
         });
+
         await entry.save();
-        res.json(entry);
+        console.log("Entry saved to Atlas successfully");
+
+        // Explicitly send a 201 (Created) status to trigger your frontend alert
+        return res.status(201).json(entry);
+
     } catch (err) {
-        res.status(500).json({ error: "Failed to save course" });
+        console.error("UPLOAD ERROR:", err); // This will show the real culprit in Render logs
+        return res.status(500).json({ error: "Failed to save course", details: err.message });
     }
 });
 
