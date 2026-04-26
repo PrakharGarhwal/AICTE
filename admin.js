@@ -56,45 +56,55 @@ async function adminMiddleware(action, data) {
                 els.error.style.display = 'block';
             }
         },
-      add: async () => {
-    const fileInput = document.getElementById('new-file');
-    const formData = new FormData();
-    
-    formData.append('branch', document.getElementById('new-branch').value);
-    formData.append('code', document.getElementById('new-code').value);
-    formData.append('revision', document.getElementById('new-rev').value);
-    formData.append('status', document.getElementById('new-status').value);
-    
-    if (fileInput.files[0]) {
-        formData.append('syllabusFile', fileInput.files[0]);
-    }
+    add: async () => {
+            const fileInput = document.getElementById('new-file');
+            const formData = new FormData();
+            
+            formData.append('branch', document.getElementById('new-branch').value);
+            formData.append('code', document.getElementById('new-code').value);
+            formData.append('revision', document.getElementById('new-rev').value);
+            formData.append('status', document.getElementById('new-status').value);
+            
+            if (fileInput.files[0]) {
+                formData.append('syllabusFile', fileInput.files[0]);
+            }
 
-    try {
-        // 1. Send the data
-        const response = await fetch('/api/curriculum', {
-            method: 'POST',
-            body: formData 
-        });
+            try {
+                const response = await fetch('/api/curriculum', {
+                    method: 'POST',
+                    body: formData 
+                });
 
-        // 2. Check the response
-        if (response.ok) {
-            alert("✅ Syllabus Updated Successfully!");
-        } else {
-            // This catches the 502 error
-            console.log("Server responded with an error, but check Compass to see if data saved.");
-            alert("Syllabus added! (Note: Server timed out during response, but data should be live.)");
+                if (response.ok) {
+                    alert("✅ Syllabus Updated Successfully!");
+                } else {
+                    alert("⚠️ Data sent, but server timed out. Check the list below!");
+                }
+            } catch (err) {
+                console.error("Connection Error:", err);
+                alert("Connection failed. Check your Render logs.");
+            }
+            
+            // Reset the form fields
+            document.getElementById('new-branch').value = '';
+            document.getElementById('new-code').value = '';
+            fileInput.value = ''; 
+            
+            loadRegistry(); // Refresh the table
+        }, 
+        remove: async (data) => {
+            if(confirm("Remove this course from Database?")) {
+                await fetch(`/api/curriculum/${data}`, { method: 'DELETE' });
+                loadRegistry();
+            }
         }
-    } catch (err) {
-        console.error("Connection Error:", err);
-        alert("Could not connect to the server.");
-    }
-    
-    // 3. Reset and Refresh
-    document.getElementById('new-branch').value = '';
-    document.getElementById('new-code').value = '';
-    fileInput.value = ''; 
-    
-    loadRegistry(); 
+    };
+
+    if (run[action]) run[action](data);
+}
+
+// Trigger load on startup
+window.onload = loadRegistry;
 } // Refresh the table
 
         remove: async () => {
