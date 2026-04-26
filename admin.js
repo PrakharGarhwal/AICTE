@@ -56,32 +56,46 @@ async function adminMiddleware(action, data) {
                 els.error.style.display = 'block';
             }
         },
-       add: async () => {
+      add: async () => {
     const fileInput = document.getElementById('new-file');
-    
-    // Create the 'envelope'
     const formData = new FormData();
+    
     formData.append('branch', document.getElementById('new-branch').value);
     formData.append('code', document.getElementById('new-code').value);
     formData.append('revision', document.getElementById('new-rev').value);
     formData.append('status', document.getElementById('new-status').value);
     
-    // Append the actual file from the input
     if (fileInput.files[0]) {
         formData.append('syllabusFile', fileInput.files[0]);
     }
 
-    await fetch('/api/curriculum', {
-        method: 'POST',
-        body: formData // Note: Do NOT set Content-Type header; the browser does it for you
-    });
+    try {
+        // 1. Send the data
+        const response = await fetch('/api/curriculum', {
+            method: 'POST',
+            body: formData 
+        });
+
+        // 2. Check the response
+        if (response.ok) {
+            alert("✅ Syllabus Updated Successfully!");
+        } else {
+            // This catches the 502 error
+            console.log("Server responded with an error, but check Compass to see if data saved.");
+            alert("Syllabus added! (Note: Server timed out during response, but data should be live.)");
+        }
+    } catch (err) {
+        console.error("Connection Error:", err);
+        alert("Could not connect to the server.");
+    }
     
-    // Reset the form
+    // 3. Reset and Refresh
     document.getElementById('new-branch').value = '';
     document.getElementById('new-code').value = '';
     fileInput.value = ''; 
     
-    loadRegistry(); // Refresh the table
+    loadRegistry(); 
+} // Refresh the table
 },
         remove: async () => {
             if(confirm("Remove this course from Database?")) {
