@@ -96,7 +96,7 @@ async function adminMiddleware(action, data) {
     
     loadRegistry(); 
 } // Refresh the table
-},
+
         remove: async () => {
             if(confirm("Remove this course from Database?")) {
                 await fetch(`/api/curriculum/${data}`, { method: 'DELETE' });
