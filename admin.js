@@ -3,7 +3,6 @@ async function loadRegistry() {
     try {
         const res = await fetch('/api/curriculum');
         const data = await res.json();
-        console.log("Data received from DB:", data); // Check your browser console (F12) to see this
         
         const table = document.getElementById('curriculum-table');
         table.innerHTML = ''; 
@@ -46,7 +45,6 @@ async function adminMiddleware(action, data) {
             els.input.value = '';
         },
         verify: () => {
-            // Updated to match your previous choice
             if (els.input.value === "incorrect") {
                 els.modal.style.display = 'none';
                 els.panel.style.display = 'block';
@@ -56,7 +54,7 @@ async function adminMiddleware(action, data) {
                 els.error.style.display = 'block';
             }
         },
-   add: async () => {
+        add: async () => {
             const fileInput = document.getElementById('new-file');
             const formData = new FormData();
             formData.append('branch', document.getElementById('new-branch').value);
@@ -73,48 +71,29 @@ async function adminMiddleware(action, data) {
                     method: 'POST',
                     body: formData 
                 });
-
                 if (response.ok) {
                     alert("✅ Syllabus Updated Successfully!");
                 } else {
-                    // This handles the Render 502/Timeout
-                    alert("⚠️ Data sent! It might take a second to appear in the list.");
+                    alert("⚠️ Data saved, but server timed out. Refreshing list.");
                 }
             } catch (err) {
-                console.error("Connection Error:", err);
+                console.error("Fetch error:", err);
             }
 
-            // Reset the form
             document.getElementById('new-branch').value = '';
             document.getElementById('new-code').value = '';
             fileInput.value = ''; 
-            
-            loadRegistry(); // Refresh the table
+            loadRegistry(); 
         }, 
-        remove: async (data) => {
-            if(confirm("Remove this course from Database?")) {
-                await fetch(`/api/curriculum/${data}`, { method: 'DELETE' });
+        remove: async (id) => {
+            if(confirm("Remove this course?")) {
+                await fetch(`/api/curriculum/${id}`, { method: 'DELETE' });
                 loadRegistry();
             }
         }
     };
 
     if (run[action]) run[action](data);
-}
-
-// Trigger load on startup
-window.onload = loadRegistry;
-} // Refresh the table
-
-        remove: async () => {
-            if(confirm("Remove this course from Database?")) {
-                await fetch(`/api/curriculum/${data}`, { method: 'DELETE' });
-                document.getElementById(data).remove();
-            }
-        }
-    };
-
-    if (run[action]) run[action]();
 }
 
 // Trigger load on startup
