@@ -1,4 +1,8 @@
 const express = require('express');
+const fs = require('fs');
+if (!fs.existsSync('./uploads')) {
+    fs.mkdirSync('./uploads');
+}
 const mongoose = require('mongoose');
 const multer = require('multer'); // Handles file uploads
 const path = require('path');
