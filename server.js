@@ -12,7 +12,7 @@ const app = express();
 
 // Configure how files are saved
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'), // Save in 'uploads' folder
+   destination: (req, file, cb) => cb(null, path.join(__dirname, 'uploads'), // Save in 'uploads' folder
     filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
 });
 const upload = multer({ storage: storage });
