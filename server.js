@@ -12,8 +12,13 @@ const app = express();
 
 // Configure how files are saved
 const storage = multer.diskStorage({
-   destination: (req, file, cb) => cb(null, path.join(__dirname, 'uploads'), // Save in 'uploads' folder
-    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
+    destination: (req, file, cb) => {
+        const dir = path.join(__dirname, 'uploads');
+        cb(null, dir); 
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
 });
 const upload = multer({ storage: storage });
 mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/aicte_portal');
