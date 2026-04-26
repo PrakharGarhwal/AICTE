@@ -56,15 +56,14 @@ async function adminMiddleware(action, data) {
                 els.error.style.display = 'block';
             }
         },
-    add: async () => {
+   add: async () => {
             const fileInput = document.getElementById('new-file');
             const formData = new FormData();
-            
             formData.append('branch', document.getElementById('new-branch').value);
             formData.append('code', document.getElementById('new-code').value);
             formData.append('revision', document.getElementById('new-rev').value);
             formData.append('status', document.getElementById('new-status').value);
-            
+
             if (fileInput.files[0]) {
                 formData.append('syllabusFile', fileInput.files[0]);
             }
@@ -78,14 +77,14 @@ async function adminMiddleware(action, data) {
                 if (response.ok) {
                     alert("✅ Syllabus Updated Successfully!");
                 } else {
-                    alert("⚠️ Data sent, but server timed out. Check the list below!");
+                    // This handles the Render 502/Timeout
+                    alert("⚠️ Data sent! It might take a second to appear in the list.");
                 }
             } catch (err) {
                 console.error("Connection Error:", err);
-                alert("Connection failed. Check your Render logs.");
             }
-            
-            // Reset the form fields
+
+            // Reset the form
             document.getElementById('new-branch').value = '';
             document.getElementById('new-code').value = '';
             fileInput.value = ''; 
