@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AICTE | Unified Model Curriculum Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="auth-container">
+            <h3>Portal Access</h3>
+            <p id="err" class="error-text">Password is incorrect</p>
+            <input type="password" id="pass-field" placeholder="Enter Password">
+            <div class="modal-btns">
+                <button onclick="adminMiddleware('verify')" class="btn-primary">Login</button>
+                <button onclick="adminMiddleware('close')" class="btn-link">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container flex-nav">
+            <div class="brand-container">
+                <img src="emblem.png" alt="State Emblem of India" class="header-emblem">
+                <div class="logo">AICTE<span>.gov</span></div>
+            </div>
+            <div id="nav-auth">
+                <button onclick="adminMiddleware('open')" class="btn-primary">Admin Login</button>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="hero">
+        <div class="container">
+            <h1>What curriculum are you looking for?</h1>
+            <div class="search-box">
+                <input type="text" placeholder="Search by branch, code, or year...">
+                <button>Search</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="admin-panel" class="admin-section" style="display:none;">
+    <h3>Update Model Curriculum</h3>
+    <div class="db-form">
+        <input type="text" id="new-branch" placeholder="Branch (e.g. CSE)">
+        <input type="text" id="new-code" placeholder="Course Code">
+        <input type="text" id="new-rev" placeholder="Revision (e.g. 2026.01)">
+        <select id="new-status">
+            <option value="Official">Official</option>
+            <option value="Draft">Draft</option>
+        </select>
+        
+        <input type="file" id="new-file" accept=".pdf,.doc,.docx">
+        
+        <button onclick="adminMiddleware('add')">Add to Registry</button>
+    </div>
+</section>
+
+        <h2 class="section-title">Latest Model Curricula</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Branch</th>
+                    <th>Code</th>
+                    <th>Revision</th>
+                    <th>Status</th>
+                    <th>Syllabus</th>
+                    <th class="admin-only" style="display:none;">Control</th>
+                </tr>
+            </thead>
+            <tbody id="curriculum-table">
+                <tr id="row-1">
+                    <td>Computer Science</td>
+                    <td>CS-402</td>
+                    <td>2026.01</td>
+                    <td><span class="status-badge">Official</span></td>
+                    <td><a href="syllabus/CS-402.pdf" download class="download-link">Syllabus</a></td>
+                    <td class="admin-only" style="display:none;">
+                        <button onclick="adminMiddleware('remove', 'row-1')" class="btn-delete">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <div class="container footer-flex">
+            <div>
+                <strong>All India Council for Technical Education</strong>
+                <p style="font-size: 14px; color: #666; margin-bottom: 0;">Standardizing Technical Education across India.</p>
+            </div>
+            
+            <div class="official-disclaimer">
+                <p>The Notices data on this website is updated every hour.</p>
+                <p>This extract of the Notice has been approved for public dissemination.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="admin.js"></script>
+</body>
+</html>

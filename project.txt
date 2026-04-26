@@ -1,0 +1,4 @@
+"A unified portal for developing a model Curriculum for all the AICTE
+roved Institutes"
+AICTE-roved institutes often lack a standardized roach to curriculum development. This project aims to develop a unified portal that facilitates the creation, sharing, and updating of model curricula for all AICTE-roved institutions, ensuring consistency and quality in education.
+

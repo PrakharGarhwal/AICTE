@@ -1,0 +1,295 @@
+/* 1. VARIABLES & THEMES */
+:root {
+    --usa-blue: #005ea2;
+    --usa-dark-blue: #1a4480;
+    --usa-red: #d54309;
+    --bg-gray: #f0f0f0;
+    --text-gray: #1b1b1b;
+    --body-bg: #ffffff;
+    --card-bg: #f9f9f9;
+    --border-color: #dddddd;
+    --table-row-border: #eeeeee;
+}
+
+[data-theme="dark"] {
+    --usa-blue: #2491eb;
+    --usa-dark-blue: #0b1d35;
+    --bg-gray: #1a1a1a;
+    --text-gray: #e0e0e0;
+    --body-bg: #121212;
+    --card-bg: #1e1e1e;
+    --border-color: #333333;
+    --table-row-border: #2a2a2a;
+}
+
+/* 2. CORE LAYOUT */
+body { 
+    margin: 0; 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+    color: var(--text-gray); 
+    background: var(--body-bg); 
+    line-height: 1.5;
+    transition: background 0.3s, color 0.3s;
+}
+
+.container { 
+    width: 90%; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+}
+
+/* 3. HEADER (EMBLEM LEFT, TEXT RIGHT) */
+header { 
+    padding: 15px 0; 
+    border-bottom: 4px solid var(--usa-blue); 
+    background: var(--body-bg);
+}
+
+.flex-nav { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.brand-container {
+    display: flex;
+    align-items: center; /* Vertically aligns emblem and AICTE text */
+    gap: 15px; /* Space between emblem and text */
+}
+
+.header-emblem {
+    height: 60px; /* Adjust based on your emblem image scale */
+    width: auto;
+}
+
+/* Emblem Dark Mode Filter */
+[data-theme="dark"] .header-emblem { 
+    filter: invert(1) brightness(0.9); 
+}
+
+.logo { 
+    font-size: 28px; 
+    font-weight: bold; 
+    color: var(--usa-blue); 
+    line-height: 1; 
+}
+
+.logo span { 
+    font-weight: normal; 
+    color: #666; 
+}
+
+/* 4. HERO SECTION */
+.hero { 
+    background: var(--usa-dark-blue); 
+    color: white; 
+    padding: 50px 0; 
+    text-align: center; 
+}
+
+.hero h1 { 
+    font-size: 30px; 
+    margin: 0 0 25px 0; 
+}
+
+.search-box { 
+    display: flex; 
+    max-width: 600px; 
+    margin: 0 auto; 
+}
+
+.search-box input { 
+    flex: 1; 
+    padding: 12px; 
+    border: none; 
+    font-size: 16px; 
+    border-radius: 4px 0 0 4px; 
+}
+
+.search-box button { 
+    padding: 12px 25px; 
+    background: var(--usa-red); 
+    color: white; 
+    border: none; 
+    border-radius: 0 4px 4px 0; 
+    font-weight: bold; 
+    cursor: pointer; 
+}
+
+/* 5. ADMIN PANEL & MODALS */
+.admin-section { 
+    background: var(--card-bg); 
+    padding: 25px; 
+    border: 1px solid var(--usa-blue); 
+    margin-top: 40px; 
+    border-radius: 4px; 
+}
+
+.db-form { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px; 
+    margin-top: 15px; 
+}
+
+.db-form input, .db-form select { 
+    flex: 1; 
+    min-width: 150px; 
+    padding: 10px; 
+    border: 1px solid var(--border-color); 
+    background: var(--body-bg); 
+    color: var(--text-gray); 
+    border-radius: 4px; 
+}
+
+.db-form button { 
+    background: var(--usa-blue); 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    border-radius: 4px; 
+}
+
+/* 6. TABLE & STATUS */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+}
+
+th { 
+    background: var(--bg-gray); 
+    text-align: left; 
+    padding: 12px; 
+    border-bottom: 2px solid var(--usa-blue); 
+}
+
+td { 
+    padding: 12px; 
+    border-bottom: 1px solid var(--table-row-border); 
+}
+
+.status-badge { 
+    background: #e1f3ff; 
+    color: #005ea2; 
+    padding: 3px 8px; 
+    font-size: 12px; 
+    font-weight: bold; 
+    border-radius: 3px; 
+}
+
+.download-link {
+    color: var(--usa-blue);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-delete { 
+    background: var(--usa-red); 
+    color: white; 
+    border: none; 
+    padding: 5px 10px; 
+    cursor: pointer; 
+    border-radius: 3px; 
+    font-weight: bold; 
+}
+
+/* 7. FOOTER & DISCLAIMER */
+footer { 
+    background: var(--bg-gray); 
+    padding: 40px 0; 
+    margin-top: 60px; 
+    border-top: 1px solid var(--border-color); 
+}
+
+.footer-flex { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    flex-wrap: wrap; 
+    gap: 30px; 
+}
+
+.official-disclaimer {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #444;
+    border-left: 3px solid var(--usa-red);
+    padding-left: 15px;
+    line-height: 1.5;
+    max-width: 450px;
+}
+
+/* 8. FUNCTIONAL UI (Modals & Theme Switch) */
+.modal-overlay { 
+    display: none; 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.9); 
+    z-index: 9999; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.auth-container { 
+    background: var(--card-bg); 
+    padding: 30px; 
+    border-radius: 8px; 
+    border: 2px solid var(--usa-blue); 
+    text-align: center; 
+    width: 320px; 
+}
+
+.error-text { 
+    color: var(--usa-red); 
+    display: none; 
+    font-weight: bold; 
+    margin-bottom: 10px; 
+}
+
+.theme-switch-wrapper { 
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 1000; 
+}
+
+.theme-switch { 
+    display: inline-block; 
+    height: 24px; 
+    position: relative; 
+    width: 50px; 
+}
+
+.theme-switch input { display: none; }
+
+.slider { 
+    background-color: #ccc; 
+    cursor: pointer; 
+    position: absolute; 
+    inset: 0; 
+    transition: .4s; 
+    border-radius: 34px; 
+}
+
+.slider:before { 
+    background-color: #fff; 
+    bottom: 4px; 
+    content: ""; 
+    height: 16px; 
+    left: 4px; 
+    position: absolute; 
+    transition: .4s; 
+    width: 16px; 
+    border-radius: 50%; 
+}
+
+input:checked + .slider { background-color: var(--usa-blue); }
+input:checked + .slider:before { transform: translateX(26px); }
