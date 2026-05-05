@@ -1,295 +1,291 @@
-/* 1. VARIABLES & THEMES */
+/* 1. BRAND & THEME VARIABLES */
 :root {
-    --usa-blue: #005ea2;
-    --usa-dark-blue: #1a4480;
-    --usa-red: #d54309;
-    --bg-gray: #f0f0f0;
-    --text-gray: #1b1b1b;
-    --body-bg: #ffffff;
-    --card-bg: #f9f9f9;
-    --border-color: #dddddd;
-    --table-row-border: #eeeeee;
+    --primary-black: #111111;
+    --accent-gold: #c5a059;
+    --bg-light: #ffffff;
+    --bg-muted: #f6f6f6;
+    --text-main: #333333;
+    --text-muted: #777777;
+    --border-soft: #eeeeee;
+    --error: #d9534f;
+    --header-height: 80px;
 }
 
 [data-theme="dark"] {
-    --usa-blue: #2491eb;
-    --usa-dark-blue: #0b1d35;
-    --bg-gray: #1a1a1a;
-    --text-gray: #e0e0e0;
-    --body-bg: #121212;
-    --card-bg: #1e1e1e;
-    --border-color: #333333;
-    --table-row-border: #2a2a2a;
+    --primary-black: #ffffff;
+    --bg-light: #0f0f0f;
+    --bg-muted: #1a1a1a;
+    --text-main: #f0f0f0;
+    --text-muted: #aaaaaa;
+    --border-soft: #2a2a2a;
 }
 
-/* 2. CORE LAYOUT */
+/* 2. CORE RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body { 
-    margin: 0; 
-    font-family: 'Segoe UI', Arial, sans-serif; 
-    color: var(--text-gray); 
-    background: var(--body-bg); 
-    line-height: 1.5;
-    transition: background 0.3s, color 0.3s;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-main);
+    background: var(--bg-light);
+    line-height: 1.6;
 }
 
 .container { 
     width: 90%; 
-    max-width: 1000px; 
+    max-width: 1200px; 
     margin: 0 auto; 
 }
 
-/* 3. HEADER (EMBLEM LEFT, TEXT RIGHT) */
+/* 3. HEADER & NAVIGATION */
 header { 
-    padding: 15px 0; 
-    border-bottom: 4px solid var(--usa-blue); 
-    background: var(--body-bg);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border-soft);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .flex-nav { 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-}
-
-.brand-container {
-    display: flex;
-    align-items: center; /* Vertically aligns emblem and AICTE text */
-    gap: 15px; /* Space between emblem and text */
-}
-
-.header-emblem {
-    height: 60px; /* Adjust based on your emblem image scale */
-    width: auto;
-}
-
-/* Emblem Dark Mode Filter */
-[data-theme="dark"] .header-emblem { 
-    filter: invert(1) brightness(0.9); 
+    width: 100%;
 }
 
 .logo { 
-    font-size: 28px; 
-    font-weight: bold; 
-    color: var(--usa-blue); 
-    line-height: 1; 
+    font-size: 20px; 
+    font-weight: 900; 
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-black); 
 }
 
 .logo span { 
-    font-weight: normal; 
-    color: #666; 
+    color: var(--accent-gold);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    margin: 0 15px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 /* 4. HERO SECTION */
 .hero { 
-    background: var(--usa-dark-blue); 
-    color: white; 
-    padding: 50px 0; 
+    background: var(--bg-muted);
+    padding: 100px 0; 
     text-align: center; 
 }
 
+.badge {
+    background: var(--accent-gold);
+    color: white;
+    padding: 4px 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 20px;
+}
+
 .hero h1 { 
-    font-size: 30px; 
-    margin: 0 0 25px 0; 
+    font-size: 48px; 
+    margin: 20px 0; 
+    font-weight: 800;
 }
 
 .search-box { 
     display: flex; 
-    max-width: 600px; 
-    margin: 0 auto; 
+    max-width: 500px; 
+    margin: 30px auto 0; 
+    background: var(--bg-light);
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid var(--border-soft);
 }
 
 .search-box input { 
     flex: 1; 
-    padding: 12px; 
+    padding: 12px 20px; 
     border: none; 
-    font-size: 16px; 
-    border-radius: 4px 0 0 4px; 
+    outline: none;
+    background: transparent;
+    color: var(--text-main);
 }
 
 .search-box button { 
-    padding: 12px 25px; 
-    background: var(--usa-red); 
+    padding: 10px 25px; 
+    background: var(--primary-black); 
     color: white; 
     border: none; 
-    border-radius: 0 4px 4px 0; 
-    font-weight: bold; 
+    border-radius: 25px; 
     cursor: pointer; 
 }
 
-/* 5. ADMIN PANEL & MODALS */
-.admin-section { 
-    background: var(--card-bg); 
-    padding: 25px; 
-    border: 1px solid var(--usa-blue); 
-    margin-top: 40px; 
-    border-radius: 4px; 
+/* 5. PRODUCT GRID */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
 }
 
-.db-form { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 10px; 
-    margin-top: 15px; 
+.product-card {
+    transition: transform 0.3s ease;
 }
 
-.db-form input, .db-form select { 
-    flex: 1; 
-    min-width: 150px; 
-    padding: 10px; 
-    border: 1px solid var(--border-color); 
-    background: var(--body-bg); 
-    color: var(--text-gray); 
-    border-radius: 4px; 
+.product-card:hover {
+    transform: translateY(-10px);
 }
 
-.db-form button { 
-    background: var(--usa-blue); 
-    color: white; 
-    border: none; 
-    padding: 10px 20px; 
-    cursor: pointer; 
-    font-weight: bold; 
-    border-radius: 4px; 
-}
-
-/* 6. TABLE & STATUS */
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    margin-top: 20px; 
-}
-
-th { 
-    background: var(--bg-gray); 
-    text-align: left; 
-    padding: 12px; 
-    border-bottom: 2px solid var(--usa-blue); 
-}
-
-td { 
-    padding: 12px; 
-    border-bottom: 1px solid var(--table-row-border); 
+.product-img-placeholder {
+    height: 380px;
+    background: #e9e9e9;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
 }
 
 .status-badge { 
-    background: #e1f3ff; 
-    color: #005ea2; 
-    padding: 3px 8px; 
-    font-size: 12px; 
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: white; 
+    color: black; 
+    padding: 5px 12px; 
+    font-size: 11px; 
     font-weight: bold; 
-    border-radius: 3px; 
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.download-link {
-    color: var(--usa-blue);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+.product-info {
+    padding: 20px 0;
 }
 
-.btn-delete { 
-    background: var(--usa-red); 
+.product-info h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.category {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* 6. BUTTONS */
+.btn-primary { 
+    background: var(--primary-black); 
     color: white; 
     border: none; 
-    padding: 5px 10px; 
+    padding: 12px 24px; 
     cursor: pointer; 
-    border-radius: 3px; 
     font-weight: bold; 
+    border-radius: 4px; 
+    text-transform: uppercase;
 }
 
-/* 7. FOOTER & DISCLAIMER */
+.btn-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+.btn-add {
+    background: var(--primary-black);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 7. CART SIDEBAR (MODAL) */
+.modal-overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.5); 
+    z-index: 2000; 
+    display: flex; 
+    justify-content: flex-end; 
+}
+
+.cart-panel { 
+    background: var(--bg-light); 
+    width: 100%;
+    max-width: 400px; 
+    height: 100vh;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-soft);
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* 8. ADMIN PANEL */
+.admin-section { 
+    background: var(--bg-muted); 
+    padding: 30px; 
+    margin: 40px 0; 
+    border-radius: 8px; 
+}
+
+.db-form { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px; 
+    margin-top: 20px; 
+}
+
+.db-form input, .db-form select { 
+    padding: 12px; 
+    border: 1px solid var(--border-soft); 
+    border-radius: 4px; 
+}
+
+/* 9. FOOTER */
 footer { 
-    background: var(--bg-gray); 
-    padding: 40px 0; 
-    margin-top: 60px; 
-    border-top: 1px solid var(--border-color); 
+    background: var(--bg-muted); 
+    padding: 60px 0; 
+    margin-top: 100px; 
 }
 
 .footer-flex { 
     display: flex; 
     justify-content: space-between; 
-    align-items: flex-start; 
     flex-wrap: wrap; 
-    gap: 30px; 
+    gap: 40px; 
 }
 
-.official-disclaimer {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    color: #444;
-    border-left: 3px solid var(--usa-red);
-    padding-left: 15px;
-    line-height: 1.5;
-    max-width: 450px;
+.footer-links p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
 }
-
-/* 8. FUNCTIONAL UI (Modals & Theme Switch) */
-.modal-overlay { 
-    display: none; 
-    position: fixed; 
-    inset: 0; 
-    background: rgba(0,0,0,0.9); 
-    z-index: 9999; 
-    align-items: center; 
-    justify-content: center; 
-}
-
-.auth-container { 
-    background: var(--card-bg); 
-    padding: 30px; 
-    border-radius: 8px; 
-    border: 2px solid var(--usa-blue); 
-    text-align: center; 
-    width: 320px; 
-}
-
-.error-text { 
-    color: var(--usa-red); 
-    display: none; 
-    font-weight: bold; 
-    margin-bottom: 10px; 
-}
-
-.theme-switch-wrapper { 
-    position: fixed; 
-    bottom: 20px; 
-    right: 20px; 
-    z-index: 1000; 
-}
-
-.theme-switch { 
-    display: inline-block; 
-    height: 24px; 
-    position: relative; 
-    width: 50px; 
-}
-
-.theme-switch input { display: none; }
-
-.slider { 
-    background-color: #ccc; 
-    cursor: pointer; 
-    position: absolute; 
-    inset: 0; 
-    transition: .4s; 
-    border-radius: 34px; 
-}
-
-.slider:before { 
-    background-color: #fff; 
-    bottom: 4px; 
-    content: ""; 
-    height: 16px; 
-    left: 4px; 
-    position: absolute; 
-    transition: .4s; 
-    width: 16px; 
-    border-radius: 50%; 
-}
-
-input:checked + .slider { background-color: var(--usa-blue); }
-input:checked + .slider:before { transform: translateX(26px); }
