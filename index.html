@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akshay Kharra</title>
+    <title>Akshay Kharra | Modern Essentials</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Using Phosphor Icons for a clean look -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body data-theme="light">
 
-    <div id="auth-modal" class="modal-overlay">
-        <div class="auth-container">
-            <h3>Portal Access</h3>
-            <p id="err" class="error-text">Password is incorrect</p>
-            <input type="password" id="pass-field" placeholder="Enter Password">
-            <div class="modal-btns">
-                <button onclick="adminMiddleware('verify')" class="btn-primary">Login</button>
-                <button onclick="adminMiddleware('close')" class="btn-link">Cancel</button>
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="modal-overlay" style="display:none;">
+        <div class="auth-container cart-panel">
+            <div class="flex-nav">
+                <h3>Your Bag</h3>
+                <button onclick="toggleCart()" class="btn-close">&times;</button>
+            </div>
+            <hr>
+            <div id="cart-items">
+                <p style="text-align:center; color:#888;">Your cart is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <div class="flex-nav">
+                    <strong>Total:</strong>
+                    <span id="cart-total">₹0.00</span>
+                </div>
+                <button class="btn-primary" style="width:100%; margin-top:15px;">Checkout</button>
             </div>
         </div>
     </div>
@@ -23,86 +34,143 @@
     <header>
         <div class="container flex-nav">
             <div class="brand-container">
-                <img src="emblem.png" alt="State Emblem of India" class="header-emblem">
-                <div class="logo">Akshay Kharra<span>.gov</span></div>
+                <div class="logo">AKSHAY KHARRA<span>.studio</span></div>
             </div>
-            <div id="nav-auth">
-                <button onclick="adminMiddleware('open')" class="btn-primary">Admin Login</button>
+            <nav class="nav-links">
+                <a href="#">New Arrivals</a>
+                <a href="#">Men</a>
+                <a href="#">Women</a>
+            </nav>
+            <div id="nav-actions" class="flex-nav">
+                <button onclick="toggleCart()" class="btn-link">
+                    <i class="ph ph-shopping-bag"></i> Cart (<span id="cart-count">0</span>)
+                </button>
+                <button onclick="adminMiddleware('open')" class="btn-primary">Admin</button>
             </div>
         </div>
     </header>
 
-
     <section class="hero">
         <div class="container">
-            <h1>What curriculum are you looking for?</h1>
+            <span class="badge">Spring Collection 2026</span>
+            <h1>Style Defined by You.</h1>
+            <p>Premium quality fabrics, tailored for the modern individual.</p>
             <div class="search-box">
-                <input type="text" placeholder="Search by branch, code, or year...">
+                <input type="text" placeholder="Search for oversized tees, denim...">
                 <button>Search</button>
             </div>
         </div>
     </section>
 
     <main class="container">
+        <!-- Admin Panel for adding Products -->
         <section id="admin-panel" class="admin-section" style="display:none;">
-    <h3>Update Model Curriculum</h3>
-    <div class="db-form">
-        <input type="text" id="new-branch" placeholder="Branch (e.g. CSE)">
-        <input type="text" id="new-code" placeholder="Course Code">
-        <input type="text" id="new-rev" placeholder="Revision (e.g. 2026.01)">
-        <select id="new-status">
-            <option value="Official">Official</option>
-            <option value="Draft">Draft</option>
-        </select>
-        
-        <input type="file" id="new-file" accept=".pdf,.doc,.docx">
-        
-        <button onclick="adminMiddleware('add')">Add to Registry</button>
-    </div>
-</section>
+            <h3>Inventory Management</h3>
+            <div class="db-form">
+                <input type="text" id="new-item-name" placeholder="Product Name">
+                <input type="number" id="new-price" placeholder="Price (INR)">
+                <input type="text" id="new-category" placeholder="Category (e.g. Outerwear)">
+                <select id="new-status">
+                    <option value="In Stock">In Stock</option>
+                    <option value="Limited">Limited Edition</option>
+                </select>
+                <input type="file" id="new-image" accept="image/*">
+                <button onclick="addProduct()">Add Product</button>
+            </div>
+        </section>
 
-        <h2 class="section-title">Latest Model Curricula</h2>
+        <div class="flex-nav" style="margin-bottom: 2rem;">
+            <h2 class="section-title">Trending Now</h2>
+            <div class="filters">
+                <select id="filter-category">
+                    <option value="all">All Items</option>
+                    <option value="tops">Tops</option>
+                    <option value="bottoms">Bottoms</option>
+                </select>
+            </div>
+        </div>
         
-        <table>
-            <thead>
-                <tr>
-                    <th>Branch</th>
-                    <th>Code</th>
-                    <th>Revision</th>
-                    <th>Status</th>
-                    <th>Syllabus</th>
-                    <th class="admin-only" style="display:none;">Control</th>
-                </tr>
-            </thead>
-            <tbody id="curriculum-table">
-                <tr id="row-1">
-                    <td>Computer Science</td>
-                    <td>CS-402</td>
-                    <td>2026.01</td>
-                    <td><span class="status-badge">Official</span></td>
-                    <td><a href="syllabus/CS-402.pdf" download class="download-link">Syllabus</a></td>
-                    <td class="admin-only" style="display:none;">
-                        <button onclick="adminMiddleware('remove', 'row-1')" class="btn-delete">Remove</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- Product Grid -->
+        <div class="product-grid" id="curriculum-table">
+            <!-- Product Item 1 -->
+            <div class="product-card" id="row-1">
+                <div class="product-img-placeholder">
+                    <span class="status-badge">Trending</span>
+                </div>
+                <div class="product-info">
+                    <h4>Essential Heavyweight Tee</h4>
+                    <p class="category">Minimalist Series</p>
+                    <div class="flex-nav">
+                        <span class="price">₹1,499</span>
+                        <button onclick="addToCart('Essential Tee', 1499)" class="btn-add">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Item 2 -->
+            <div class="product-card" id="row-2">
+                <div class="product-img-placeholder">
+                    <span class="status-badge">New</span>
+                </div>
+                <div class="product-info">
+                    <h4>Relaxed Fit Chinos</h4>
+                    <p class="category">Bottoms</p>
+                    <div class="flex-nav">
+                        <span class="price">₹2,999</span>
+                        <button onclick="addToCart('Relaxed Chinos', 2999)" class="btn-add">Add +</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
         <div class="container footer-flex">
             <div>
-                <strong>All India Council for Technical Education</strong>
-                <p style="font-size: 14px; color: #666; margin-bottom: 0;">Standardizing Technical Education across India.</p>
+                <strong>AKSHAY KHARRA STUDIO</strong>
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">Premium streetwear and lifestyle essentials.</p>
             </div>
-            
-            <div class="official-disclaimer">
-                <p>The Notices data on this website is updated every hour.</p>
-                <p>This extract of the Notice has been approved for public dissemination.</p>
+            <div class="footer-links">
+                <p>Support</p>
+                <p>Shipping Policy</p>
+                <p>Contact Us</p>
             </div>
         </div>
     </footer>
 
     <script src="admin.js"></script>
+    <script>
+        // Simple Shopping Cart Logic
+        let cart = [];
+        function toggleCart() {
+            const cartDiv = document.getElementById('cart-sidebar');
+            cartDiv.style.display = cartDiv.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function addToCart(name, price) {
+            cart.push({name, price});
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const cartItems = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            
+            if(cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex-nav" style="margin-bottom:10px;">
+                        <span>${item.name}</span>
+                        <span>₹${item.price}</span>
+                    </div>
+                `).join('');
+            }
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            totalEl.innerText = `₹${total.toLocaleString()}`;
+        }
+    </script>
 </body>
 </html>
